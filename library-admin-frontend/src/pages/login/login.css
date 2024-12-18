@@ -1,0 +1,59 @@
+.login-background {
+    background: url('https://one.haui.edu.vn/assets/media/haui/IMG_4766.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 5%;
+  }
+  
+  .login-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 32.5px;
+    border-radius: 15px;
+    text-align: center;
+    width: 450px;
+    height: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .login-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .login-container input {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  
+  .login-container button {
+    width: 95%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .login-container .footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #777;
+  }
+  
