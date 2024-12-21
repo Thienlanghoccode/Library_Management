@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     UserMapper userMapper;
+
+    PasswordEncoder encoder;
 
 
     @Override
@@ -61,6 +64,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addUser(UserCreateRequest request) {
         User user = userMapper.toUser(request);
+        user.setUserAccountPassword(encoder.encode(user.getUserAccountPassword()));
         userRepository.save(user);
     }
 
@@ -73,7 +77,7 @@ public class UserServiceImpl implements UserService {
         user.setUserRole(request.getUserRole());
         user.setUserCode(request.getUserCode());
         user.setUserAddress(request.getUserAddress());
-        user.setUserAccountPassword(request.getUserAccountPassword());
+        user.setUserAccountPassword(encoder.encode(request.getUserAccountPassword()));
         user.setUserImage(request.getUserImage());
         user.setUserActive(request.isUserActive());
         userRepository.save(user);

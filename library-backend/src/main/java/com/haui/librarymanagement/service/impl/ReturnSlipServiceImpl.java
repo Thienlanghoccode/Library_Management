@@ -6,11 +6,13 @@ import com.haui.librarymanagement.dto.response.common.BookInReturnBookResponse;
 import com.haui.librarymanagement.entity.Book;
 import com.haui.librarymanagement.entity.BorrowingForm;
 import com.haui.librarymanagement.entity.ReturnSlip;
+import com.haui.librarymanagement.entity.User;
 import com.haui.librarymanagement.exception.AppException;
 import com.haui.librarymanagement.exception.ErrorCode;
 import com.haui.librarymanagement.mapper.ReturnBookMapper;
 import com.haui.librarymanagement.repository.BorrowingFormRepository;
 import com.haui.librarymanagement.repository.ReturnSlipRepository;
+import com.haui.librarymanagement.repository.UserRepository;
 import com.haui.librarymanagement.service.ReturnSlipService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,8 @@ public class ReturnSlipServiceImpl implements ReturnSlipService {
     ReturnSlipRepository returnSlipRepository;
 
     ReturnBookMapper returnBookMapper;
+
+    UserRepository userRepository;
 
     @Override
     public Object returnBook(ReturnSlipRequest request) {
@@ -59,6 +63,10 @@ public class ReturnSlipServiceImpl implements ReturnSlipService {
         returnSlip.setBorrowDate( dateBorrow );
         returnSlip.setReturnSlipDate(dateReturn);
         returnSlip.setLate(isLate);
+
+        User user = userRepository.findById(borrowingForm.getUser().getUserId()).get();
+        user.setUserMoney(isLate ? borrowingForm.getUser().getUserMoney().add(money) : borrowingForm.getUser().getUserMoney());
+        userRepository.save(user);
 
         ReturnSlip returnSlipResponse = returnSlipRepository.save(returnSlip);
         Book book = borrowingForm.getBook();

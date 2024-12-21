@@ -82,10 +82,6 @@ public class Book {
     private List<Image> images;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<CouponCode> couponCodes;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
             cascade = {
             CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH

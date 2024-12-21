@@ -2,10 +2,8 @@ package com.haui.librarymanagement.controller;
 
 import com.haui.librarymanagement.dto.request.UserCreateRequest;
 import com.haui.librarymanagement.dto.response.ApiResponse;
-import com.haui.librarymanagement.dto.response.FavoriteBookResponse;
 import com.haui.librarymanagement.dto.response.UserResponse;
 import com.haui.librarymanagement.entity.User;
-import com.haui.librarymanagement.service.FavoriteBooksService;
 import com.haui.librarymanagement.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +19,6 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
-    FavoriteBooksService favoriteBooksService;
-
-    @GetMapping("/{id}/favoriteBooks")
-    public List<FavoriteBookResponse> getAllFavoriteBooksByUserId(@PathVariable(value = "id") int userId){
-        return favoriteBooksService.getAllFavoriteBookByUserId(userId);
-    }
 
     @GetMapping
     public User getUserByAccountName(@RequestParam String userAccountName){

@@ -121,7 +121,6 @@ public class BookServiceImpl implements BookService {
             data.put("category", book.getCategory() != null ? book.getCategory().getName() : "");
             data.put("publisher", book.getPublisher() != null ? book.getPublisher().getName() : "");
             data.put("images", book.getImages() != null ? "image" : "");
-            data.put("couponCodes", book.getCouponCodes() != null ? "image" : "");
             metadata.add(data);
         }
 

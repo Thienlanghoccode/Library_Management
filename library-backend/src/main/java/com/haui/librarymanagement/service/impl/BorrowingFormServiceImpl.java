@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +59,12 @@ public class BorrowingFormServiceImpl implements BorrowingFormService {
 
         User user = userRepository.findUserByUserAccountNameOrUserCode(request.getUserAccountName(),request.getUserAccountName() ).orElseThrow(() ->
                 new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        if(user.getUserMoney() == null ||user.getUserMoney().subtract(book.getPrice()).compareTo(BigDecimal.ZERO) <= 0) {
+            throw new AppException(ErrorCode.USER_NOT_ENOUGH_MONEY);
+        }
+
+        user.setUserMoney(user.getUserMoney().subtract(book.getPrice()));
 
         BorrowingForm borrowingForm = new BorrowingForm();
         borrowingForm.setBook(book);

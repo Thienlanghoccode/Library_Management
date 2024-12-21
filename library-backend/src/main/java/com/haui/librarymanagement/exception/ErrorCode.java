@@ -25,7 +25,8 @@ public enum ErrorCode {
     BOOK_NOT_AVAILABLE(1014,"Đã hết sách này!", HttpStatus.BAD_REQUEST),
     INVALID_CREDENTIALS(1014,"Mẩu khẩu hoặc email sai!", HttpStatus.BAD_REQUEST),
     WRONG_VERIFY_KEYACTIVE(1012,"Mã xác minh sai", HttpStatus.BAD_REQUEST),
-    RETURN_SLIP_NOT_FOUND(1010, "Phiếu trả không tồn tại", HttpStatus.NOT_FOUND);
+    RETURN_SLIP_NOT_FOUND(1010, "Phiếu trả không tồn tại", HttpStatus.NOT_FOUND),
+    USER_NOT_ENOUGH_MONEY(1011,"Tài khoản không đủ tiền !", HttpStatus.NOT_FOUND);
 
     ErrorCode(int code, String message, HttpStatusCode statusCode){
         this.code = code;

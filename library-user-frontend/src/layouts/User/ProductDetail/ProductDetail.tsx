@@ -6,7 +6,8 @@ import { TableProductDetails } from './TableProductDetails';
 import BookModel from '../../../models/BookModel';
 import { SpinnerLoading } from '../../Utils/SprinnerLoading';
 import { StarsReview } from '../../Utils/StarsReview';
-import BorrowBookButton from './CheckoutBook';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductDetail = () => {
     const [httpError, setHttpError] = useState(null);
@@ -15,6 +16,72 @@ export const ProductDetail = () => {
 
     const [isLoadingBook, setIsLoadingBook] = useState(true);
     const [book, setBook] = useState<BookModel>();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userAccountName, setUserAccountName] = useState('');
+    const [date, setDate] = useState<string>('');
+    const [dueDate, setDueDate] = useState<string>('');
+
+    const navigate = useNavigate();
+
+    const handleOpenModal = () => {
+        // Kiểm tra dữ liệu trong localStorage trước khi mở modal
+        const storedData = localStorage.getItem('authToken');
+        if (storedData) {
+            try {
+                const payload = JSON.parse(atob(storedData.split('.')[1]));
+                const email = payload.sub;
+                setUserAccountName(email);
+                setIsModalOpen(true);
+            } catch (error) {
+                console.error('Invalid token format:', error);
+            }
+        } else {
+            navigate('/auth/login');
+        }
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    useEffect(() => {
+        const today = new Date().toISOString().split('T')[0];
+        setDate(today);
+        setDueDate(today);
+    }, []);
+
+    const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const formObject: { [key: string]: string } = {};
+
+        // Chuyển FormData thành đối tượng JSON
+        formData.forEach((value, key) => {
+            formObject[key] = value.toString();
+        });
+
+        try {
+            const response = await fetch('http://localhost:8000/borrows/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formObject), // Chuyển đổi đối tượng thành chuỗi JSON
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Dữ liệu đã được gửi thành công:', data);
+                // Có thể thực hiện thêm hành động nếu gửi thành công (ví dụ: đóng modal)
+                setIsModalOpen(false);
+            } else {
+                const data = await response.json();
+                window.alert(data.message);
+            }
+        } catch (error) {
+            console.error('Lỗi khi gửi request:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchBook = async () => {
@@ -117,13 +184,139 @@ export const ProductDetail = () => {
                                                                 </span>
                                                                 <span> cuốn</span>
                                                             </span>
-                                                            {/* <a
+                                                            <Button
                                                                 className="tg-btn tg-active tg-btn-lg"
+                                                                onClick={handleOpenModal}
                                                             >
                                                                 Mượn Sách
-                                                            </a> */}
-                                                            
-                                                            {bookId !== undefined && book?.name && <BorrowBookButton bookId={book.id} bookName={book.name} />}
+                                                            </Button>
+                                                            {/* Modal */}
+                                                            {isModalOpen && (
+                                                                <div
+                                                                    className="modal show d-block"
+                                                                    tabIndex={-1}
+                                                                    role="dialog"
+                                                                >
+                                                                    <div
+                                                                        className="modal-dialog modal-fade"
+                                                                        role="document"
+                                                                    >
+                                                                        <div className="modal-content">
+                                                                            <div className="modal-header">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="close modal-title"
+                                                                                    onClick={handleCloseModal}
+                                                                                    aria-label="Close"
+                                                                                >
+                                                                                    <span aria-hidden="true">
+                                                                                        &times;
+                                                                                    </span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <form onSubmit={handleFormSubmit}>
+                                                                                <div className="modal-body">
+                                                                                    <div className="form-group">
+                                                                                        <label htmlFor="borrowDate">
+                                                                                            Ngày Mượn
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="date"
+                                                                                            className="form-control"
+                                                                                            id="date"
+                                                                                            name="date"
+                                                                                            value={date}
+                                                                                            required
+                                                                                            min={
+                                                                                                new Date()
+                                                                                                    .toISOString()
+                                                                                                    .split('T')[0]
+                                                                                            }
+                                                                                            onChange={(e) =>
+                                                                                                setDate(e.target.value)
+                                                                                            }
+                                                                                        />
+                                                                                    </div>
+                                                                                    <div className="form-group">
+                                                                                        <label htmlFor="borrowDate">
+                                                                                            Ngày Trả
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="date"
+                                                                                            className="form-control"
+                                                                                            id="dueDate"
+                                                                                            name="dueDate"
+                                                                                            value={dueDate}
+                                                                                            onChange={(e) =>
+                                                                                                setDueDate(
+                                                                                                    e.target.value,
+                                                                                                )
+                                                                                            }
+                                                                                            min={
+                                                                                                new Date()
+                                                                                                    .toISOString()
+                                                                                                    .split('T')[0]
+                                                                                            }
+                                                                                            required
+                                                                                        />
+                                                                                    </div>
+                                                                                    <div className="form-group">
+                                                                                        <label htmlFor="borrowDate">
+                                                                                            Người Mượn
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="text"
+                                                                                            value={userAccountName}
+                                                                                            className="form-control"
+                                                                                            name="userAccountName"
+                                                                                            required
+                                                                                            readOnly
+                                                                                        />
+                                                                                    </div>
+                                                                                    <div className="form-group">
+                                                                                        <label htmlFor="borrowDate">
+                                                                                            Tên Sách
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="text"
+                                                                                            className="form-control"
+                                                                                            name="borrowDate"
+                                                                                            placeholder={book?.name}
+                                                                                            required
+                                                                                            readOnly
+                                                                                        />
+                                                                                        <input
+                                                                                            type="text"
+                                                                                            className="form-control"
+                                                                                            name="bookId"
+                                                                                            value={book?.id}
+                                                                                            hidden
+                                                                                            style={{
+                                                                                                visibility: 'hidden',
+                                                                                            }}
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="modal-footer">
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        className="btn btn-secondary"
+                                                                                        onClick={handleCloseModal}
+                                                                                    >
+                                                                                        Hủy
+                                                                                    </button>
+                                                                                    <button
+                                                                                        type="submit"
+                                                                                        className="btn btn-primary"
+                                                                                    >
+                                                                                        Xác Nhận
+                                                                                    </button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>

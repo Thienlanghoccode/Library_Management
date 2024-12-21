@@ -1,0 +1,7 @@
+.modal-backdrop {
+  z-index: 1050 !important; /* Make sure backdrop is on top */
+}
+
+.modal {
+  z-index: 1051 !important; /* Make sure modal is on top of backdrop */
+}

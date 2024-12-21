@@ -82,16 +82,15 @@ const BorrowBookButton: React.FC<BorrowBookButtonProps> = ({ bookId, bookName })
 
     return (
         <>
-            <a
+            <Button 
                 className="tg-btn tg-active tg-btn-lg"
-                href="javascript:void(0);"
                 onClick={(e) => {
                     e.preventDefault(); // Ngăn chặn hành động mặc định
                     handleBorrowBook();
                 }}
             >
                 Mượn Sách
-            </a>
+            </Button>
 
             <Modal show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>

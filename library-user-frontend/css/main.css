@@ -155,7 +155,7 @@ textarea.form-control {
   color: #666;
 } /* Internet Explorer 10-11 */
 .form-control::-ms-input-placeholder {
-  color: #66;
+  color: #666;
 } /* Microsoft Edge */
 input:focus,
 .select select:focus,
@@ -4754,3 +4754,11 @@ body.tg-comingsoonpage .tg-footerbar {
 .active_item {
   color: #25d366 !important;
 }
+.modal-dialog {
+  position: absolute;
+  top: 45%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+}
+
+

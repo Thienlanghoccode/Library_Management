@@ -1,7 +1,9 @@
 package com.haui.librarymanagement.dto.response;
 
-import com.haui.librarymanagement.*;
-import com.haui.librarymanagement.entity.*;
+import com.haui.librarymanagement.entity.Author;
+import com.haui.librarymanagement.entity.Category;
+import com.haui.librarymanagement.entity.Image;
+import com.haui.librarymanagement.entity.Publisher;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -32,5 +34,4 @@ public class BookResponse {
     private Category category;
     private Publisher publisher;
     private List<Image> images;
-    private List<CouponCode> couponCodes;
 }

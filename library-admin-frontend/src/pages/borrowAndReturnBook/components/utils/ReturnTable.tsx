@@ -146,7 +146,7 @@ export const ReturnTable: React.FC = () => {
                             <Typography><strong>Phí phạt:</strong> {selectedReturn.returnSlipLateFee}</Typography>
                             <Typography><strong>Hoàn trả (VND):</strong> {selectedReturn.returnSlipRefund}</Typography>
                             <Typography><strong>Tên sách:</strong> {selectedReturn.book}</Typography>
-                            <Typography><strong>Ngày mượn:</strong> {selectedReturn.borrowDate}</Typography>
+                            <Typography><strong>Ngày hẹn trả:</strong> {selectedReturn.borrowDate}</Typography>
                             <Typography><strong>Trạng thái trả:</strong> {selectedReturn.statusReturn}</Typography>
                             <Typography><strong>Trễ hạn:</strong> {selectedReturn.late}</Typography>
                         </Box>

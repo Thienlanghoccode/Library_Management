@@ -54,23 +54,27 @@ export const TopSellingAuthors = () => {
                 <h3>Top Selling Authors</h3>
             </div>
             <div className="tg-widgetcontent">
-                <ul>
+                <div>
                     {authors.map((author) => (
-                        <li>
+                        <div key={author.id} className="tg-authoritem">
+                            {' '}
+                            {/* Sử dụng div thay vì li */}
                             <figure>
-                                <a href="javascript:void(0);">
+                                <a href="#" onClick={(e) => e.preventDefault()}>
                                     <img src="/images/author/imag-09.jpg" alt="image description" />
                                 </a>
                             </figure>
                             <div className="tg-authornamebooks">
                                 <h4>
-                                    <a href="javascript:void(0);">{author.name}</a>
+                                    <a href="#" onClick={(e) => e.preventDefault()}>
+                                        {author.name}
+                                    </a>
                                 </h4>
                                 <p>{author.total_book} Published Books</p>
                             </div>
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         </div>
     );

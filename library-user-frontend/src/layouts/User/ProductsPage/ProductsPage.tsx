@@ -209,8 +209,8 @@ export const ProductsPage = () => {
                                                     </div>
                                                 )}
                                                 {books.map((book) => (
-                                                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                                                        <PostBook key={book.id} book={book} />
+                                                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3" key={book.id}>
+                                                        <PostBook book={book} />
                                                     </div>
                                                 ))}
                                             </div>

@@ -45,6 +45,7 @@ export const HomePage = () => {
             setBestSellingBooks(loadBestSellingBooks);
             setIsLoadingBestSellingBooks(false);
         };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         fetchBestSellingBooks().catch((error: any) => {
             setIsLoadingBestSellingBooks(false);
             setHttpError(error.message);
