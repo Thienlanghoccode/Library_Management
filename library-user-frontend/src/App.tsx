@@ -1,12 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AdminRouters } from './routers/AdminRouters';
 import { UserRouters } from './routers/UserRouters';
+import "./utils/setupFetch.js"
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/admin/*" element={<AdminRouters />} />
                 <Route path="/*" element={<UserRouters />} />
             </Routes>
         </BrowserRouter>
