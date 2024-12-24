@@ -7,6 +7,7 @@ import Login from './pages/login/login';
 import { AuthProvider } from './pages/login/authContext';
 import PrivateRoute from './pages/login/privateRoute';
 import { UserManager } from './pages/bookManager/UserManager';
+import './utils/setupFetch'
 
 function App() {
   return (
