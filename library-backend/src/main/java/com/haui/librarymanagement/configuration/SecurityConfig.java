@@ -51,7 +51,10 @@ public class SecurityConfig {
             "/swagger-resources/configuration/security",
             "/swagger-ui.html/**",
             "/swagger-ui/**",
-            "/auth/**"
+            "/auth/**",
+            "/categories/**",
+            "books/**",
+            "/author/**"
     };
 
     @Bean

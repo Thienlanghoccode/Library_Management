@@ -5,6 +5,7 @@ import com.haui.librarymanagement.dto.response.ApiResponse;
 import com.haui.librarymanagement.dto.response.UserResponse;
 import com.haui.librarymanagement.entity.User;
 import com.haui.librarymanagement.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -42,7 +43,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ApiResponse<String> addUser(@RequestBody UserCreateRequest request){
+    public ApiResponse<String> addUser(@Valid @RequestBody UserCreateRequest request){
         userService.addUser(request);
         return ApiResponse.<String>builder()
                 .result("add user success")
@@ -51,7 +52,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ApiResponse<String> updateUser(@PathVariable int id,@RequestBody UserCreateRequest request) {
+    public ApiResponse<String> updateUser(@PathVariable int id,@Valid @RequestBody UserCreateRequest request) {
         userService.updateUser(id, request);
         return ApiResponse.<String>builder()
                 .result("update user success")

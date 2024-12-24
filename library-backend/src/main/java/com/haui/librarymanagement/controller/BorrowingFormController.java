@@ -4,6 +4,7 @@ import com.haui.librarymanagement.dto.request.BorrowingFormRequest;
 import com.haui.librarymanagement.dto.response.ApiResponse;
 import com.haui.librarymanagement.dto.response.BorrowingResponse;
 import com.haui.librarymanagement.service.BorrowingFormService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,7 +27,7 @@ public class BorrowingFormController {
     }
 
     @PostMapping("/create")
-    public ApiResponse<Object> createBorrowingForm(@RequestBody BorrowingFormRequest request){
+    public ApiResponse<Object> createBorrowingForm(@Valid @RequestBody BorrowingFormRequest request){
         return ApiResponse.builder()
                 .result(borrowingFormService.createBorrowingForm(request)).build();
     }

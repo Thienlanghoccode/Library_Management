@@ -54,7 +54,7 @@ public class AuthorController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ApiResponse<String> createAuthor(@RequestBody AuthorRequest bookRequest){
+    public ApiResponse<String> createAuthor(@Valid @RequestBody AuthorRequest bookRequest){
         authorService.createAuthor(bookRequest);
         return ApiResponse.<String>builder()
                 .result("Tạo nhà xuất bản thành công!")
