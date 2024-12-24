@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class PublisherController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ApiResponse<?> create(@Valid @RequestBody PublisherRequest request) {
         publisherService.createPublisher(request);
@@ -43,6 +45,7 @@ public class PublisherController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<?> update(@PathVariable(value = "id") Integer id,@Valid @RequestBody PublisherRequest request) {
         publisherService.updatePublisher(id,request);
@@ -51,6 +54,7 @@ public class PublisherController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<?> delete(@PathVariable(value = "id") Integer id) {
         publisherService.deletePublisher(id);

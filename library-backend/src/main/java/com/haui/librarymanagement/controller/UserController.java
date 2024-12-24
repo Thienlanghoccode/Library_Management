@@ -8,6 +8,7 @@ import com.haui.librarymanagement.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +34,13 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
     public List<UserResponse> getAllUsers(){
         return userService.getAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ApiResponse<String> addUser(@RequestBody UserCreateRequest request){
         userService.addUser(request);
@@ -46,6 +49,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<String> updateUser(@PathVariable int id,@RequestBody UserCreateRequest request) {
         userService.updateUser(id, request);
@@ -54,6 +58,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<String> deleteUser(@PathVariable int id){
         userService.deleteUser(id);

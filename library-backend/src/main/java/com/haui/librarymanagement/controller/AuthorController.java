@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +52,7 @@ public class AuthorController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ApiResponse<String> createAuthor(@RequestBody AuthorRequest bookRequest){
         authorService.createAuthor(bookRequest);
@@ -59,6 +61,7 @@ public class AuthorController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<String> deleteAuthor(@PathVariable("id") int id){
         authorService.removeAuthor(id);
@@ -68,6 +71,7 @@ public class AuthorController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<String> updateCategory(@PathVariable(value = "id") Integer id, @Valid @RequestBody AuthorRequest request){
         authorService.updateAuthor(id, request);

@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class CategoryController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ApiResponse<CategoryResponse> createCategories(@Valid @RequestBody CategoryCreateRequest request){
         return ApiResponse.<CategoryResponse>builder()
@@ -45,6 +47,7 @@ public class CategoryController {
         return ApiResponse.<BooksResponse>builder().result(categoryService.getBooksByCategory(id, pageNo, pageSize, sortBy, sortDir)).build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<String> deleteCategory(@PathVariable("id") int id){
         categoryService.removeCategory(id);
@@ -54,6 +57,7 @@ public class CategoryController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<CategoryResponse> updateCategory(@PathVariable(value = "id") Integer id, @Valid @RequestBody CategoryCreateRequest request){
 

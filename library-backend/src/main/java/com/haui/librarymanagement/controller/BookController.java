@@ -11,6 +11,7 @@ import com.haui.librarymanagement.utils.AppConstants;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public class BookController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ApiResponse<String> createBook(@RequestBody BookRequest bookRequest){
         bookService.createBook(bookRequest);
@@ -58,6 +60,7 @@ public class BookController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<BookResponse> updateBook(@RequestBody BookRequest bookRequest,
                                                 @PathVariable(value = "id") int id){
@@ -67,6 +70,7 @@ public class BookController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse deleteBook(@PathVariable(value = "id") int id){
         bookService.deleteBook(id);

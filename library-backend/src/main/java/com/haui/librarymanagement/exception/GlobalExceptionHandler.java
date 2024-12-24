@@ -5,6 +5,7 @@ import com.haui.librarymanagement.dto.response.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -69,6 +70,13 @@ public class GlobalExceptionHandler {
             attributes.put(fieldName, message);
         });
         return ResponseEntity.badRequest().body(attributes);
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ResponseMessage> handleAccessDeniedException(AccessDeniedException exception){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage(exception.getMessage()));
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)

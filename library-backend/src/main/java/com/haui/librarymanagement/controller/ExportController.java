@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class ExportController {
+
     BookService bookService;
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/export")
     public ResponseEntity<Resource> exportProducts() {
         ResourceDTO resourceDTO = bookService.exportExcel();
